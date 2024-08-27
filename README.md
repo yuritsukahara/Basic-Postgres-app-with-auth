@@ -1,4 +1,4 @@
-# Blank server template 
+# Blank server template (wip)
 ---
 
 ## Tech Stack

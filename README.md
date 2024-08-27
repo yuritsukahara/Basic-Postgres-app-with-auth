@@ -4,6 +4,7 @@
 
 - implement jwt token with server
 - manage queries with tanstack
+- create default user on docker compose
 
 ## Tech Stack
 

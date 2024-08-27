@@ -1,5 +1,9 @@
 # Blank server template (wip)
 ---
+## TODO
+
+- implement jwt token with server
+- manage queries with tanstack
 
 ## Tech Stack
 

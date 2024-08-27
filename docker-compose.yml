@@ -1,20 +1,11 @@
-version: '3.9'
-
 services:
 
   db:
     image: postgres
     restart: always
     environment:
-      POSTGRES_DB: postgres
+      POSTGRES_DB: provolt
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-     - 5432:5432
-      
-  # mybun:
-  #   image: mybun
-  #   ports:
-  #    - 3000:3000
-  #   env_file:
-  #     - ./.env
+      - 5432:5432

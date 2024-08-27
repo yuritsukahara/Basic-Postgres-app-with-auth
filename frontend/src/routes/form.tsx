@@ -2,6 +2,8 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useForm } from '@tanstack/react-form'
 import type { FieldApi } from '@tanstack/react-form'
 import { api } from '@/lib/api'
+import { zodValidator } from '@tanstack/zod-form-adapter'
+import { createAplicationSchema } from '@server/sharedTypes'
 
 export const Route = createFileRoute('/form')({
   component: Form
@@ -22,6 +24,7 @@ function Form() {
   const navigate = useNavigate()
 
   const form = useForm({
+    validatorAdapter: zodValidator(),
     defaultValues: {
       codigo: '',
       descricao: '',
@@ -51,21 +54,9 @@ function Form() {
           {/* A type-safe field component*/}
           <form.Field
             name="codigo"
+            // validatorAdapter={zodValidator()}
             validators={{
-              onChange: ({ value }) =>
-                !value
-                  ? 'A first name is required'
-                  : value.length < 3
-                    ? 'First name must be at least 3 characters'
-                    : undefined,
-              onChangeAsyncDebounceMs: 500,
-              onChangeAsync: async ({ value }) => {
-                await new Promise((resolve) => setTimeout(resolve, 1000))
-                return (
-                  value.includes('error') &&
-                  'No "error" allowed in first name'
-                )
-              },
+              onChange: createAplicationSchema.shape.codigo,
             }}
             children={(field) => {
               // Avoid hasty abstractions. Render props are great!
@@ -88,6 +79,9 @@ function Form() {
         <div>
           <form.Field
             name="descricao"
+            validators={{
+              onChange: createAplicationSchema.shape.descricao,
+            }}
             children={(field) => (
               <>
                 <label htmlFor={field.name}>Last Name:</label>

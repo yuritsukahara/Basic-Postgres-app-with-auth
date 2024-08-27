@@ -1,5 +1,5 @@
 import { Hono } from 'hono'
-import getUser from './middlewares/authMiddleware';
+import getUser from './middlewares/auth';
 
 export const authRoute = new Hono()
     .get("/login", async (c) => {

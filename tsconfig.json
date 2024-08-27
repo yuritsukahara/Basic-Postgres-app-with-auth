@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
     "strict": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx"
+    "jsxImportSource": "hono/jsx",
+    "moduleResolution": "node", // Helps with module resolution in Bun/Vite
+    "allowSyntheticDefaultImports": true
   }
 }

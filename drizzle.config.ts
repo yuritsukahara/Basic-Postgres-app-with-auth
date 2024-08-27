@@ -1,19 +1,18 @@
 import { defineConfig } from "drizzle-kit";
 
-const env = process.env;
-
 export default defineConfig({
   dialect: "postgresql",
-  schema: "./schemas/*",
-  out: "./src/drizzle",
-  migrations: { schema: "./src/drizzle/migrations" },
+  schema: "./server/db/schemas/*",
+  out: "./drizzle",
+  migrations: { schema: "./drizzle/migrations" },
   dbCredentials: {
-    url: env.DB_URL,
-    user: "postgres",
-    password: env.DATABASE_PASSWORD,
-    host: "127.0.0.1",
-    port: 5432,
-    database: "postgres",
+    url: process.env.DB_URL,
+    user: process.env.DATABASE_USER,
+    password: process.env.DATABASE_PASSWORD,
+    host: process.env.DATABASE_HOST || '127.0.0.1',
+    port: Number(process.env.DATABASE_USER) || 5432,
+    database: process.env.DATABASE_NAME || 'postgres',
+    ssl: false, // Disable SSL
   },
   verbose: true,
   strict: true,

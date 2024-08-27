@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 const app = new Hono();
 import { logger } from 'hono/logger'
-import { aplicationRoute } from "./routes/aplicacao"
+import { aplicationRoute } from "./routes/aplications"
 import { serveStatic } from 'hono/bun'
 import { authRoute } from "./auth";
 

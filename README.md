@@ -40,7 +40,6 @@ In order to maintain concise use of Types, the backend and frontend uses zod and
 The available bun scripts are:
 ```
 "dev": "bun run --watch server/index.ts",
-"build": "bun run vite build",
 "studio": "bunx drizzle-kit studio",
 "generate": "bunx drizzle-kit generate",
 "migrate": "bunx server/db/migrate.ts",

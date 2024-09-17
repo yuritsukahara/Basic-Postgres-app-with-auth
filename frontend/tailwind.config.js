@@ -9,6 +9,7 @@ module.exports = {
     './src/**/*.{ts,tsx}',
   ],
   prefix: "",
+  important: "body", // mui tailwind
   theme: {
     container: {
       center: true,

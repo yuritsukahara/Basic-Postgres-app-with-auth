@@ -1,19 +1,38 @@
-import { pgTable, serial, varchar, pgEnum, index } from "drizzle-orm/pg-core";
-
-export const UserRole = pgEnum("userRole", ["ADMIN", "BASIC"]);
+import { pgTable, serial, index, text } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
+import { usersToGroups } from "./usersToGroups";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { z } from "zod";
 
 export const users = pgTable(
   "users",
   {
     id: serial("id").primaryKey(),
-    user: varchar("user").notNull().unique(),
-    fullName: varchar("full_name").notNull(),
-    email: varchar("email").notNull().unique(),
-    role: UserRole("userRole").default("BASIC").notNull(),
+    user: text("user").notNull().unique(),
+    fullName: text("full_name").notNull(),
+    email: text("email").notNull().unique(),
+    password: text("password").notNull(),
   },
   (table) => {
     return {
-      emailIndex: index("emailIndex").on(table.email),
+      emailIndex: index("email_index").on(table.email),
     };
   }
 );
+
+export const usersRelations = relations(users, ({ many }) => ({
+  usersToGroups: many(usersToGroups)
+}))
+
+
+// Schema for inserting a user - can be used to validate API requests
+export const insertUsersSchema = createInsertSchema(users, {
+  user: z.string(),
+  fullName: z.string(),
+  email: z.string(),
+  password: z.string(), // when inserting remember to bcrypt
+})
+
+// Schema for selecting a user - can be used to validate API responses
+export const selectUsersSchema = createSelectSchema(users)
+

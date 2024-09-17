@@ -8,10 +8,12 @@
     "studio": "bunx drizzle-kit studio",
     "generate": "bunx drizzle-kit generate",
     "migrate": "bunx server/db/migrate.ts",
-    "drop": "bunx drizzle-kit drop"
+    "drop": "bunx drizzle-kit drop",
+    "startAdminUser": "bun run server/startAdminUser.ts"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.2.1",
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.33.0",
     "drizzle-zod": "^0.5.1",
@@ -21,6 +23,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/bun": "latest",
     "@types/pg": "^8.11.6",
     "drizzle-kit": "^0.24.2"

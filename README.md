@@ -8,7 +8,7 @@
 
 ## Tech Stack
 
-This project uses Bun, Hono, Vite, Tanstack (router, query and form), ShadCn, Tailwind, Zod, Drizzle, Postgres and JWT, to create a simple project as a Template for future projects.
+This project uses Bun, Hono, Vite, Tanstack (router, query and form), ShadCn, Tailwind, Zod, Drizzle, Postgres, JWT and Bcrypt, to create a simple project as a Template for future projects.
 
 For default creates a simple user permissions and a database to manage users and grant protected routes and profile customizations.
 
@@ -49,6 +49,7 @@ The available bun scripts are:
 "generate": "bunx drizzle-kit generate",
 "migrate": "bunx server/db/migrate.ts",
 "drop": "bunx drizzle-kit drop"
+"startAdminUser": "bun run server/startAdminUser.ts", //run just once
 ```
    
 ## Running the app

@@ -1,3 +1,3 @@
-import { insertAplicationsSchema } from "./db/schemas"
+import { insertUsersSchema } from "./db/schemas"
 
-export const createAplicationSchema = insertAplicationsSchema.omit({ id: true })
+export const createUsersSchema = insertUsersSchema.omit({ id: true })

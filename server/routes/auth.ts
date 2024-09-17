@@ -52,18 +52,17 @@ export const authRoute = new Hono()
                 })
             );
 
-            const token = await sign(
-                {
-                    user: user,
-                    groups: userGroupsList,
-                    authorized: true,
-                    exp: Math.floor(Date.now() / 1000) + 60 * 60 * 12, // expira o token em 12h
-                }, import.meta.env.VITE_JWT_TOKEN
-            )
 
-            const payload = await decode(token).payload
+            const payload = {
+                user: user,
+                groups: userGroupsList,
+                authorized: true,
+                exp: Math.floor(Date.now() / 1000) + 60 * 60 * 12, // expira o token em 12h
+            }
 
-            return c.json({ token, payload }, 200);
+            const token = await sign(payload, import.meta.env.VITE_JWT_TOKEN)
+
+            return c.json({ token, ...payload }, 200);
 
         } catch (error) {
             console.error("Login error: ", error);

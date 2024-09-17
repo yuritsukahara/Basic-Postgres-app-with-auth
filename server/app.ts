@@ -8,6 +8,7 @@ import { jwt } from "hono/jwt";
 
 app.use('*', logger())
 
+// auth routes are protected
 app.use(
     '/api/auth/*',
     jwt({

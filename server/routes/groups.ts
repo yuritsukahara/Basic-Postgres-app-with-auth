@@ -1,53 +1,24 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
-import { createUsersSchema } from "../sharedTypes";
+import { createGroupsSchema } from "../sharedTypes";
 
 import { db } from "../db"
-import { users as usersTable, insertUsersSchema, selectUsersSchema, users } from "../db/schemas/users"
+import { users as usersTable } from "../db/schemas/users"
 import { isUser } from "../middlewares/authMiddleware";
-import { groups as groupsTable, usersToGroups as usersToGroupsTable } from "../db/schemas";
+import { groups as groupsTable, insertGroupsSchema } from "../db/schemas";
 import { eq } from "drizzle-orm"
 
-export const usersRoute = new Hono()
+export const groupsRoute = new Hono()
     .get('/', isUser(['ADMIN']), async (c) => {
-        const users = await db
+        const result = await db
             .select()
-            .from(usersTable)
-            .innerJoin(usersToGroupsTable, eq(usersTable.id, usersToGroupsTable.userId))
-            .innerJoin(groupsTable, eq(usersToGroupsTable.groupId, groupsTable.id));
+            .from(groupsTable)
 
-        // Transform data to the desired format
-        const usersWithGroups = users.map(user => ({
-            id: user.users.id,
-            user: user.users.user,
-            fullName: user.users.fullName,
-            email: user.users.email,
-            groups: {
-                id: user.groups.id,
-                name: user.groups.name
-            }
-        }));
-
-        return c.json({ users: usersWithGroups });
-    })
-    .post('/create', zValidator('json', createUsersSchema), isUser(['ADMIN']), async (c) => {
-        const user = await c.req.valid('json')
-
-        const validatedUser = insertUsersSchema.parse({
-            ...user
-        })
-
-        const createResult = await db
-            .insert(usersTable)
-            .values(validatedUser)
-            .returning()
-
-        c.status(201)
-        return c.json(createResult)
+        return c.json({ groups: result });
     })
     .get('/:id{[0-9]+}', isUser(), async (c) => {
         const id = Number.parseInt(c.req.param('id'))
-        const user = await db
+        const result = await db
             .select(
                 {
                     "id": usersTable.id,
@@ -57,8 +28,24 @@ export const usersRoute = new Hono()
                 })
             .from(usersTable)
             .where(eq(usersTable.id, id))
+            .then(res => res[0])
 
-        return c.json({ user })
+        return c.json({ group: result })
+    })
+    .post('/create', zValidator('json', createGroupsSchema), isUser(['ADMIN']), async (c) => {
+        const data = await c.req.valid('json')
+
+        const validatedSchema = insertGroupsSchema.parse({
+            ...data
+        })
+
+        const createResult = await db
+            .insert(groupsTable)
+            .values(validatedSchema)
+            .returning()
+
+        c.status(201)
+        return c.json(createResult)
     })
     .delete('/:id{[0-9]+}', isUser(['ADMIN']), async (c) => {
         try {
@@ -71,8 +58,8 @@ export const usersRoute = new Hono()
 
             // Perform deletion
             const deleteResult = await db
-                .delete(usersTable)
-                .where(eq(usersTable.id, id))
+                .delete(groupsTable)
+                .where(eq(groupsTable.id, id))
                 .returning();
 
             // Check if any rows were deleted

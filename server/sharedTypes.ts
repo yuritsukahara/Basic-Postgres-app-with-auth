@@ -1,6 +1,11 @@
-import { insertUsersSchema } from "./db/schemas"
+import {
+    insertUsersSchema,
+    insertGroupsSchema
+} from "./db/schemas"
 
 export const createUsersSchema = insertUsersSchema.omit({ id: true })
+export const createGroupsSchema = insertGroupsSchema.omit({ id: true })
+
 
 export type Payload = {
     user: string,

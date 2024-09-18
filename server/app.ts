@@ -4,12 +4,16 @@ import { logger } from 'hono/logger'
 import { usersRoute } from "./routes/users"
 import { serveStatic } from 'hono/bun'
 import { authRoute } from "./routes/auth";
-import { jwt } from "hono/jwt";
-import { isUser } from "./middlewares/authMiddleware";
+import { groupsRoute } from "./routes/groups";
 
 app.use('*', logger())
 
-const apiRoutes = app.basePath("/api").route("/", authRoute).route('/users', usersRoute)
+const apiRoutes = app
+    .basePath("/api")
+    .route("/", authRoute)
+    .route('/users', usersRoute)
+    .route('/groups', groupsRoute)
+
 
 app.get("*", serveStatic({ root: './frontend/dist' }))
 app.get("*", serveStatic({ path: './frontend/dist/index.html' }))

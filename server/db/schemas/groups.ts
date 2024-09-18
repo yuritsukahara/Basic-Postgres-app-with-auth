@@ -20,5 +20,3 @@ export const groupsRelations = relations(groups, ({ many }) => ({
 export const insertGroupsSchema = createInsertSchema(groups, {
   name: z.string(),
 })
-
-export const selectGroupsSchema = createSelectSchema(groups)

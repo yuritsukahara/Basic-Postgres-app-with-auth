@@ -29,8 +29,8 @@ export const usersRelations = relations(users, ({ many }) => ({
 export const insertUsersSchema = createInsertSchema(users, {
   user: z.string(),
   fullName: z.string(),
-  email: z.string(),
-  password: z.string(), // when inserting remember to bcrypt
+  email: z.string().email(),
+  password: z.string().min(6), // when inserting remember to bcrypt
 })
 
 // Schema for selecting a user - can be used to validate API responses

@@ -2,12 +2,13 @@ import { Hono } from 'hono'
 import { db } from '../db'
 import { eq } from 'drizzle-orm';
 import { groups, users as usersTable, usersToGroups } from '../db/schemas'
-import { decode, sign, verify } from 'hono/jwt'
+import { sign } from 'hono/jwt'
 import bcrypt from 'bcrypt';
-import { json } from 'drizzle-orm/mysql-core';
+import { isUser } from '../middlewares/authMiddleware';
+import getAuthToken from '../lib/getAuthToken';
 
 export const authRoute = new Hono()
-    .post("/login", async (c) => {
+    .post("/getToken", async (c) => {
         try {
             // Ensure the content-type is application/json
             if (c.req.header('content-type') !== 'application/json') {
@@ -52,7 +53,6 @@ export const authRoute = new Hono()
                 })
             );
 
-
             const payload = {
                 user: user,
                 groups: userGroupsList,
@@ -69,15 +69,9 @@ export const authRoute = new Hono()
             return c.json({ error: 'Internal server error' }, 500);
         }
     })
-    .get("auth/me", async (c) => {
-        const payload = c.get('jwtPayload')
+    .get("/me", isUser(), async (c) => {
+        const payload = await getAuthToken(c);
         return c.json(payload)
     })
-// .get("/register", async (c) => {
-//     const registerUrl = await api.register(c);
-//     return c.redirect(registerUrl.register())
-// })
-// .get("/logout", async (c) => {
-//     const logoutUrl = await api.logout(c);
-//     return c.redirect(logoutUrl.toString());
-// })
+
+

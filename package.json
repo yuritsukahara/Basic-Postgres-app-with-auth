@@ -9,7 +9,7 @@
     "generate": "bunx drizzle-kit generate",
     "migrate": "bunx server/db/migrate.ts",
     "drop": "bunx drizzle-kit drop",
-    "startAdminUser": "bun run server/startAdminUser.ts"
+    "startAdminUser": "bun run startAdminUser.ts"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.2.1",

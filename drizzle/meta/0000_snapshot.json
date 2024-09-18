@@ -1,61 +1,9 @@
 {
-  "id": "b347c163-5690-4e42-88e2-52c9f533c0e3",
+  "id": "07200bf5-704e-4ffc-909d-703a5878bca4",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.aplications": {
-      "name": "aplications",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "codigo": {
-          "name": "codigo",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "descricao": {
-          "name": "descricao",
-          "type": "varchar",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {
-        "name_idx": {
-          "name": "name_idx",
-          "columns": [
-            {
-              "expression": "id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "aplications_codigo_unique": {
-          "name": "aplications_codigo_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "codigo"
-          ]
-        }
-      }
-    },
     "public.groups": {
       "name": "groups",
       "schema": "",
@@ -98,25 +46,25 @@
         },
         "user": {
           "name": "user",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "full_name": {
           "name": "full_name",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "email": {
           "name": "email",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
         "password": {
           "name": "password",
-          "type": "varchar",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         }

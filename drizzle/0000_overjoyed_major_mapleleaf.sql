@@ -1,10 +1,3 @@
-CREATE TABLE IF NOT EXISTS "aplications" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"codigo" varchar NOT NULL,
-	"descricao" varchar NOT NULL,
-	CONSTRAINT "aplications_codigo_unique" UNIQUE("codigo")
-);
---> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "groups" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"user" varchar NOT NULL,
@@ -13,10 +6,10 @@ CREATE TABLE IF NOT EXISTS "groups" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"user" varchar NOT NULL,
-	"full_name" varchar NOT NULL,
-	"email" varchar NOT NULL,
-	"password" varchar NOT NULL,
+	"user" text NOT NULL,
+	"full_name" text NOT NULL,
+	"email" text NOT NULL,
+	"password" text NOT NULL,
 	CONSTRAINT "users_user_unique" UNIQUE("user"),
 	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
@@ -39,5 +32,4 @@ EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
-CREATE INDEX IF NOT EXISTS "name_idx" ON "aplications" USING btree ("id");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "email_index" ON "users" USING btree ("email");

@@ -6,7 +6,7 @@ export const Route = createLazyFileRoute('/profile')({
 })
 
 async function getCurrentUser() {
-    const res = await api.me.$get();
+    const res = await api.auth.me.$get();
     if (!res.ok) {
         throw new Error('server error')
     }

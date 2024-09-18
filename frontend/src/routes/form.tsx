@@ -3,7 +3,7 @@ import { useForm } from '@tanstack/react-form'
 import type { FieldApi } from '@tanstack/react-form'
 import { api } from '@/lib/api'
 import { zodValidator } from '@tanstack/zod-form-adapter'
-import { createAplicationSchema } from '@server/sharedTypes'
+import { createUsersSchema } from '@server/sharedTypes'
 
 export const Route = createFileRoute('/form')({
   component: Form
@@ -26,12 +26,14 @@ function Form() {
   const form = useForm({
     validatorAdapter: zodValidator(),
     defaultValues: {
-      codigo: '',
-      descricao: '',
+      user: '',
+      fullName: '',
+      email: '',
+      password: '',
     },
     onSubmit: async ({ value }) => {
       // Do something with form data
-      const res = await api.aplicacao.$post({ json: value })
+      const res = await api.auth.users.$post({ json: value })
       if (!res.ok) {
         throw new Error("server error")
       }
@@ -53,16 +55,16 @@ function Form() {
         <div>
           {/* A type-safe field component*/}
           <form.Field
-            name="codigo"
+            name="user"
             // validatorAdapter={zodValidator()}
             validators={{
-              onChange: createAplicationSchema.shape.codigo,
+              onChange: createUsersSchema.shape.user,
             }}
             children={(field) => {
               // Avoid hasty abstractions. Render props are great!
               return (
                 <>
-                  <label htmlFor={field.name}>First Name:</label>
+                  <label htmlFor={field.name}>Usuário:</label>
                   <input
                     id={field.name}
                     name={field.name}
@@ -78,16 +80,79 @@ function Form() {
         </div>
         <div>
           <form.Field
-            name="descricao"
+            name="fullName"
             validators={{
-              onChange: createAplicationSchema.shape.descricao,
+              onChange: createUsersSchema.shape.fullName,
             }}
             children={(field) => (
               <>
-                <label htmlFor={field.name}>Last Name:</label>
+                <label htmlFor={field.name}>Nome completo:</label>
                 <input
                   id={field.name}
                   name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+                <FieldInfo field={field} />
+              </>
+            )}
+          />
+        </div>
+        <div>
+          <form.Field
+            name="email"
+            validators={{
+              onChange: createUsersSchema.shape.email,
+            }}
+            children={(field) => (
+              <>
+                <label htmlFor={field.name}>Email:</label>
+                <input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+                <FieldInfo field={field} />
+              </>
+            )}
+          />
+        </div>
+        <div>
+          <form.Field
+            name="password"
+            validators={{
+              onChange: createUsersSchema.shape.password,
+            }}
+            children={(field) => (
+              <>
+                <label htmlFor={field.name}>Senha:</label>
+                <input
+                  id={field.name}
+                  name={field.name}
+                  value={field.state.value}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                />
+                <FieldInfo field={field} />
+              </>
+            )}
+          />
+        </div>
+        <div>
+          <form.Field
+            name="password"
+            validators={{
+              onChange: createUsersSchema.shape.password,
+            }}
+            children={(field) => (
+              <>
+                <label htmlFor={field.name}>Confirmar Senha:</label>
+                <input
+                  id={field.name}
+                  name={'Confirmar senha'}
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}

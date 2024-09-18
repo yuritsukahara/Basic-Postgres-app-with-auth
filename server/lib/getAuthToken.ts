@@ -14,7 +14,7 @@ export default async function getAuthToken(c: Context<any, any, {}>): Promise<Pa
     // Extract the token by removing the 'Bearer ' prefix
     const token = authHeader.substring(7);
 
-    const secretKey = import.meta.env.VITE_JWT_TOKEN;
+    const secretKey = import.meta.env.VITE_JWT_TOKEN_SECRET;
 
     try {
         // Verify the token and return the decoded payload

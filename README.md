@@ -2,17 +2,15 @@
 ---
 ## TODO
 
-- implement jwt token with server
 - manage queries with tanstack
-- create default user on docker compose
 
 ## Tech Stack
 
-This project uses Bun, Hono, Vite, Tanstack (router, query and form), ShadCn, Tailwind, Zod, Drizzle, Postgres, JWT and Bcrypt, to create a simple project as a Template for future projects.
+This project uses Bun, Hono, Vite, Tanstack (router, query and form), MUI, Tailwind, Zod, Drizzle, Postgres, Hono JWT and Bcrypt, to create a simple project as a Template for future projects.
 
 For default creates a simple user permissions and a database to manage users and grant protected routes and profile customizations.
 
-Is required to have an .env file to setup Postgres:
+Is required to have an .env file to setup Postgres and JWT secret:
 
 ```
 DB_URL= "127.0.0.1:5432"
@@ -21,6 +19,10 @@ DATABASE_USER="postgres"
 DATABASE_HOST="127.0.0.1"
 DATABASE_PORT="5432"
 DATABASE_NAME="postgres"
+VITE_JWT_TOKEN_SECRET='MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC01bEvI5n7L4pPLdF32nVJbqSQ
+22tydhsdiBwWAr0CY047TO99wfZVGseRLpo4zmT0QWRvUnG5S2sbdhZ3YTV3YIVm
+NLfFicngOs8WNUPAkrnGWFxDRXuWtNE5NT+qycqJ81qDfsmGihPdKevMZbXnDy84
+1DkBZyNQ8x1/f7PSGwIDAQAB'
 ```
 ## Folder structure
 
@@ -43,7 +45,7 @@ In order to maintain concise use of Types, the backend and frontend uses zod and
 3. Finally to server\sharedTypes.ts
 
 The available bun scripts are:
-```
+```js
 "dev": "bun run --watch server/index.ts",
 "studio": "bunx drizzle-kit studio",
 "generate": "bunx drizzle-kit generate",
@@ -81,10 +83,48 @@ bun install
 bun generate
 bun migrate
 ```
-4. create the first user using drizle-studio
+4. create the first users user:password admin:admin basic:basic and assign groups, just do that once
+
 ```
-bun studio
+bun run startUsers
 ```
+
+5. check if db is up
+```
+bun run studio
+```
+
+### API 
+
+#### API
+
+
+#### API Calls
+Any api calls on authorized routes by groups must have the JWT token in the request.
+You can get the authorization token via localhost:3000/api/getToken with the credentials in json on body
+
+```js
+const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+const raw = JSON.stringify({
+  "user": "admin",
+  "password": "admin"
+});
+
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: raw,
+  redirect: "follow"
+};
+
+fetch("localhost:3000/api/getToken", requestOptions)
+  .then((response) => response.text())
+  .then((result) => console.log(result))
+  .catch((error) => console.error(error));
+````
+
 ### Modifications
 
 Use as your will :D

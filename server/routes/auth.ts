@@ -60,7 +60,7 @@ export const authRoute = new Hono()
                 exp: Math.floor(Date.now() / 1000) + 60 * 60 * 12, // expira o token em 12h
             }
 
-            const token = await sign(payload, import.meta.env.VITE_JWT_TOKEN)
+            const token = await sign(payload, import.meta.env.VITE_JWT_TOKEN_SECRET)
 
             return c.json({ token, ...payload }, 200);
 

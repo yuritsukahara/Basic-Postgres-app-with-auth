@@ -6,7 +6,7 @@
 
 ## Tech Stack
 
-This project uses Bun, Hono, Vite, Tanstack (router, query and form), MUI, Tailwind, Zod, Drizzle, Postgres, Hono JWT and Bcrypt, to create a simple project as a Template for future projects.
+This project uses Bun, Hono, Vite, Tanstack (router, query and form), MUI, Tailwind, Zod, Jotai, React-Tostify, Drizzle, Postgres, Hono JWT and Bcrypt, to create a simple project as a Template for future projects.
 
 For default creates a simple user permissions and a database to manage users and grant protected routes and profile customizations.
 
@@ -80,8 +80,8 @@ bun install
 
 3. make drizzle migrations and apply
 ```
-bun generate
-bun migrate
+bun run generate
+bun run migrate
 ```
 4. create the first users user:password admin:admin basic:basic and assign groups, just do that once
 

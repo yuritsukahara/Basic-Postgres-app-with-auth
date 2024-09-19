@@ -24,7 +24,7 @@ const basicHashPass = await bcrypt.hash('basic', 10)
 const basicUserResult = await db
     .insert(users)
     .values({
-        user: 'basico',
+        user: 'basic',
         fullName: 'Basico Souza',
         email: 'basico@basico.com',
         password: basicHashPass,

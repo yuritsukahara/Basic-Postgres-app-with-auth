@@ -9,7 +9,7 @@ import { groups as groupsTable, usersToGroups as usersToGroupsTable } from "../d
 import { eq } from "drizzle-orm"
 
 export const usersRoute = new Hono()
-    .get('/', isUser(['ADMIN']), async (c) => {
+    .get('/', async (c) => {
         const users = await db
             .select()
             .from(usersTable)

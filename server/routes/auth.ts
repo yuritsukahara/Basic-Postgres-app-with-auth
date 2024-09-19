@@ -17,7 +17,6 @@ export const authRoute = new Hono()
 
             // Parse the JSON body
             const { user, password } = await c.req.json();
-
             if (!user || !password) {
                 return c.json({ error: 'Usuário e senha obrigatórios' }, 400);
             }
@@ -27,7 +26,7 @@ export const authRoute = new Hono()
 
             // Check if user exists
             if (!userData.length) {
-                return c.json({ error: 'Usuário não encontrado' }, 404);
+                return c.json({ error: 'Usuário não encontrado' }, 401);
             }
 
             // Check if the password matches
@@ -56,7 +55,7 @@ export const authRoute = new Hono()
             const payload = {
                 user: user,
                 groups: userGroupsList,
-                authorized: true,
+                authenticated: true,
                 exp: Math.floor(Date.now() / 1000) + 60 * 60 * 12, // expira o token em 12h
             }
 
@@ -69,9 +68,16 @@ export const authRoute = new Hono()
             return c.json({ error: 'Internal server error' }, 500);
         }
     })
-    .get("/me", isUser(), async (c) => {
-        const payload = await getAuthToken(c);
-        return c.json(payload)
+    .get("/me", async (c) => {
+        try {
+            const payload = await getAuthToken(c);
+
+            if (!payload.authenticated) {
+                return c.json({ ...payload }, { status: 401 })
+            }
+
+            return c.json(payload)
+        } catch (error) {
+            console.error("Login error: ", error);
+        }
     })
-
-

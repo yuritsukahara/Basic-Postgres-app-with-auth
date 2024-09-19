@@ -1,17 +1,18 @@
-import { Link } from "@tanstack/react-router";
+import { AppBar, Typography } from '@mui/material';
+import Sidebar from './Sidebar'
+import UserMenu from './UserMenu';
+import { Link } from '@tanstack/react-router';
 
 export default function Navbar() {
-  return (
-    <div className="p-2 flex gap-2">
-      <Link to="/" className="[&.active]:font-bold">
-        Home
-      </Link>{' '}
-      <Link to="/about" className="[&.active]:font-bold">
-        About
-      </Link>
-      <Link to="/form" className="[&.active]:font-bold">
-        Form
-      </Link>
-    </div>
-  )
+
+    return (
+        <>
+            <AppBar component="nav" position="static">
+                <div className='flex justify-between items-center m-2'>
+                    <Sidebar />
+                    <Typography variant='h6' component="h1" ><Link to="/">Name</Link></Typography>
+                    <UserMenu />
+                </div>
+            </AppBar>
+        </>)
 }

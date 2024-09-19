@@ -34,6 +34,8 @@ export const insertUsersSchema = createInsertSchema(users, {
 })
 
 // Schema for selecting a user - can be used to validate API responses
-export const selectUsersSchema = createSelectSchema(users).omit({ password: true })
+export const selectUsersSchema = createSelectSchema(users).omit({ password: true }).extend({
+  groups: z.array(z.string())
+})
 
 

@@ -2,13 +2,19 @@ import { verify } from "hono/jwt";
 import { Payload } from "../sharedTypes";
 import { Context } from "hono";
 
-export default async function getAuthToken(c: Context<any, any, {}>): Promise<Payload> {
+
+interface ErrorResponse {
+    authenticated: false;
+    error: string;
+}
+
+export default async function getAuthToken(c: Context<any, any, {}>): Promise<Payload | ErrorResponse> {
     // Get the Authorization header
     const authHeader = c.req.header('Authorization');
 
     // Check if the header is present and starts with 'Bearer'
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        throw new Error('Invalid or missing token');
+        return { authenticated: false, error: 'Missing token' }
     }
 
     // Extract the token by removing the 'Bearer ' prefix
@@ -21,6 +27,6 @@ export default async function getAuthToken(c: Context<any, any, {}>): Promise<Pa
         const decodedPayload = await verify(token, secretKey) as Payload;
         return decodedPayload;
     } catch (error) {
-        throw new Error('Unauthorized: Invalid token');
+        return { authenticated: false, error: 'Invalid token' }
     }
 }

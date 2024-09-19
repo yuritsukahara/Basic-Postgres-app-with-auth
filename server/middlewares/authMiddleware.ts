@@ -6,7 +6,9 @@ export const isUser = (requiredGroups?: string[]) => {
         try {
             const payload = await getAuthToken(c);
 
-            console.log('payload', payload);
+            if (!payload.authenticated) {
+                return c.json({ ...payload }, { status: 401 })
+            }
 
             const userGroups = payload.groups || [];
 

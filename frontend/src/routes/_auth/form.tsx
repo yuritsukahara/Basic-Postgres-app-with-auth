@@ -5,7 +5,7 @@ import { api } from '@/lib/api'
 import { zodValidator } from '@tanstack/zod-form-adapter'
 import { createUsersSchema } from '@server/sharedTypes'
 
-export const Route = createFileRoute('/form')({
+export const Route = createFileRoute('/_auth/form')({
   component: Form
 })
 
@@ -33,12 +33,6 @@ function Form() {
     },
     onSubmit: async ({ value }) => {
       // Do something with form data
-      const res = await api.auth.users.$post({ json: value })
-      if (!res.ok) {
-        throw new Error("server error")
-      }
-      console.log(value)
-      navigate({ to: '/' })
     },
   })
 

@@ -21,9 +21,9 @@ export const useAuth = () => {
         return user.authenticated
     }
 
-    const signOut = async () => {
+    const signOut = () => {
         localStorage.removeItem("user");
-        await setUser(RESET)
+        setUser(RESET)
     };
 
     return { isLogged, signOut };

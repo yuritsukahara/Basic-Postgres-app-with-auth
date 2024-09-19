@@ -34,12 +34,11 @@ export default function LoginForm() {
             );
 
             const data = await res.json();
+            setUser(data);
 
-            await setUser(data);
             navigate({ to: '/' });
 
-            // todo fix login double click
-            window.location.href = '/'
+            window.location.href = '/' //  todo fix login double click
 
         } catch (error) {
             console.error(error);

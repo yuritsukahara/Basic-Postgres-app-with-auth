@@ -1,32 +1,38 @@
-import { userAtom } from "@/atoms";
-import { useAtom } from "jotai";
-import { RESET } from 'jotai/utils'
+import { api } from "@/lib/api";
 
-type User = {
-    "token": string,
-    "user": string,
-    "groups": string[],
-    "authenticated": boolean,
-    "exp": number
-}
 
 export const useAuth = () => {
-    const userString = localStorage.getItem("user");
-    const [, setUser] = useAtom(userAtom)
-    const isLogged = () => {
+
+    const isLogged = async () => {
+        const userString = localStorage.getItem('user');
+
         if (!userString) return false
 
-        const user: User = JSON.parse(userString);
+        const userObject = JSON.parse(userString);
 
-        return user.authenticated
+        const userInfo = await api.me.$get({}, {
+            headers: {
+                Authorization: `Bearer ${userObject.token}`,
+            },
+        });
+
+        return userInfo.ok
+    }
+
+    async function signIn(user: string, password: string) {
+        const res = await api.getToken.$post({ json: { user, password } });
+        const data = await res.json()
+
+        if (!res.ok && 'error' in data) throw Error(data.error)
+
+        return data
     }
 
     const signOut = () => {
         localStorage.removeItem("user");
-        setUser(RESET)
     };
 
-    return { isLogged, signOut };
+    return { isLogged, signOut, signIn };
 }
 
 export type AuthContext = ReturnType<typeof useAuth>

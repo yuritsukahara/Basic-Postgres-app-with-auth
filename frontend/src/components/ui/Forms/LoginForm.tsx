@@ -1,44 +1,36 @@
 import { useState } from "react";
-import { api } from "@/lib/api";
 import { Button, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
-import { userAtom } from "@/atoms/index";
-import { useAtom } from "jotai"
 import { toast } from "react-toastify";
 import { useNavigate } from "@tanstack/react-router";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function LoginForm() {
-    const [, setUser] = useAtom(userAtom)
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const { signIn } = useAuth()
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+
         try {
             const res = await toast.promise(
-                api.getToken.$post({ json: { user: username, password } }).then(async (res) => {
-                    if (!res.ok) {
-                        const errorMessage = 'Usuário inválido ou senha incorreta';
-                        throw new Error(errorMessage); // This will trigger the toast error
-
-                    }
-                    return res; // If ok, return the response for further processing
-                }),
+                signIn(username, password),
                 {
                     pending: 'Logando...',
                     success: 'Logado com sucesso!',
-                    error: 'Erro ao fazer login', // This will be shown when the promise rejects
+                    error: {
+                        render({ data }) {
+                            return `${data || 'Erro desconhecido'}`;
+                        }
+                    }, // This will be shown when the promise rejects
                 }
             );
 
-            const data = await res.json();
-            setUser(data);
-
-            navigate({ to: '/' });
-
-            window.location.href = '/' //  todo fix login double click
+            localStorage.setItem('user', JSON.stringify(res));
+            navigate({ to: '/' })
 
         } catch (error) {
             console.error(error);

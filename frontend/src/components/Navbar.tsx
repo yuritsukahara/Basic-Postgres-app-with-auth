@@ -1,5 +1,5 @@
 import { AppBar, Typography } from '@mui/material';
-import Sidebar from './Sidebar'
+// import Sidebar from './Sidebar'
 import UserMenu from './UserMenu';
 import { Link } from '@tanstack/react-router';
 
@@ -9,7 +9,7 @@ export default function Navbar() {
         <>
             <AppBar component="nav" position="static">
                 <div className='flex justify-between items-center m-2'>
-                    <Sidebar />
+                    {/* <Sidebar /> */}
                     <Typography variant='h6' component="h1" ><Link to="/">Name</Link></Typography>
                     <UserMenu />
                 </div>

@@ -2,14 +2,12 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { useAtom } from 'jotai';
-import { userAtom } from '@/atoms';
 import { useAuth } from '@/hooks/useAuth';
-import { useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
+import { Payload } from '@server/sharedTypes';
 
 export default function UserMenu() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const [user,] = useAtom(userAtom)
     const { signOut } = useAuth()
     const navigate = useNavigate()
     const open = Boolean(anchorEl);
@@ -20,32 +18,49 @@ export default function UserMenu() {
         setAnchorEl(null);
     };
 
+    const userData = localStorage.getItem('user')
+
+    let user: Payload = {
+        user: 'string',
+        groups: [],
+        authenticated: false,
+        exp: 0,
+    }
+
+    if (userData) {
+        user = JSON.parse(userData)
+    }
+
     return (
         <div>
-            <Button
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
-                className='text-white hover:shadow-md hover:bg-primary-light'
-            >
-                {user.user}
+            {user.authenticated ? (<>
 
-            </Button>
-            <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                }}
-                color='primary'
-            >
-                <MenuItem onClick={() => { handleClose(), signOut(), navigate({ to: '/' }) }}>
-                    sair
-                </MenuItem>
-            </Menu>
+                <Button
+                    aria-controls={open ? 'basic-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleClick}
+                    className='text-white hover:shadow-md hover:bg-primary-light'
+                >
+                    {user.user}
+
+                </Button>
+                <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                    }}
+                    color='primary'
+                >
+                    <MenuItem onClick={() => { handleClose(), signOut(), navigate({ to: '/' }) }}>
+                        sair
+                    </MenuItem>
+                </Menu>
+            </>) : <Link to='/login'> Login </Link>}
+
         </div>
     );
 }

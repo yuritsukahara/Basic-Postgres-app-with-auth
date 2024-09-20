@@ -8,8 +8,7 @@ module.exports = {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
   ],
-  prefix: "",
-  important: "body", // mui tailwind
+  important: 'body', //mui
   theme: {
     container: {
       center: true,

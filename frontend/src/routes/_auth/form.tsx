@@ -1,7 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useForm } from '@tanstack/react-form'
 import type { FieldApi } from '@tanstack/react-form'
-import { api } from '@/lib/api'
 import { zodValidator } from '@tanstack/zod-form-adapter'
 import { createUsersSchema } from '@server/sharedTypes'
 

@@ -1,4 +1,5 @@
-import Navbar from '@/components/Navbar'
+
+import Navbar from '@/components/ui/Navbar'
 import { Container } from '@mui/material'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 

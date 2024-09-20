@@ -11,6 +11,7 @@ import { sidebarAtom } from '@/atoms';
 import { menus } from "./menus";
 import { Link } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
+import { Typography } from "@mui/material";
 
 
 export default function Menus() {
@@ -83,8 +84,8 @@ export default function Menus() {
                                 >
                                     {({ isActive }) => {
                                         return (
-                                            <ListItemButton selected={isActive} sx={{ pl: 4 }}>
-                                                <ListItemText primary={submenu.titulo} />
+                                            <ListItemButton selected={isActive}>
+                                                <Typography className={'pl-10'}>{submenu.titulo} </Typography>
                                             </ListItemButton>
                                         )
                                     }}
@@ -93,7 +94,8 @@ export default function Menus() {
                         </List>
                     </Collapse>
                 </React.Fragment>
-            ))}
-        </List>
+            ))
+            }
+        </List >
     );
 }

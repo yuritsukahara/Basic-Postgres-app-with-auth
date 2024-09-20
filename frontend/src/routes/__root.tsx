@@ -25,7 +25,7 @@ function NotFound() {
             <div className="min-h-screen flex flex-grow items-center justify-center bg-gray-50 ">
                 <div className="flex flex-col rounded-lg bg-white p-8 text-center shadow-xl gap-3">
                     <img src={companyLogo} className='w-64' />
-                    <Typography component="h1" variant='h3'>404</Typography>
+                    <Typography component="h1" variant='h3'>Error 404</Typography>
                     <Typography component="p">Page not found</Typography>
                     <Button href="/" variant="contained">Home</Button>
                 </div>

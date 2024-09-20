@@ -9,7 +9,7 @@ import { Box, IconButton } from '@mui/material';
 //Atoms
 import { useAtom } from 'jotai';
 import { sidebarAtom } from '@/atoms';
-import Menus from './ui/Menus';
+import Menus from './Menus';
 
 // Swipe Menu
 type Anchor = 'left';

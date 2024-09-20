@@ -15,11 +15,12 @@ import { Route as LoginImport } from './routes/login'
 import { Route as AuthImport } from './routes/_auth'
 import { Route as AppImport } from './routes/_app'
 import { Route as AuthIndexImport } from './routes/_auth/index'
-import { Route as AuthUsersImport } from './routes/_auth/users'
 import { Route as AuthProfileImport } from './routes/_auth/profile'
-import { Route as AuthGroupsImport } from './routes/_auth/groups'
 import { Route as AuthFormImport } from './routes/_auth/form'
 import { Route as AppAboutImport } from './routes/_app/about'
+import { Route as AuthUsersIndexImport } from './routes/_auth/users/index'
+import { Route as AuthGroupsIndexImport } from './routes/_auth/groups/index'
+import { Route as AuthGroupsGroupIdImport } from './routes/_auth/groups/$groupId'
 
 // Create/Update Routes
 
@@ -43,18 +44,8 @@ const AuthIndexRoute = AuthIndexImport.update({
   getParentRoute: () => AuthRoute,
 } as any)
 
-const AuthUsersRoute = AuthUsersImport.update({
-  path: '/users',
-  getParentRoute: () => AuthRoute,
-} as any)
-
 const AuthProfileRoute = AuthProfileImport.update({
   path: '/profile',
-  getParentRoute: () => AuthRoute,
-} as any)
-
-const AuthGroupsRoute = AuthGroupsImport.update({
-  path: '/groups',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -66,6 +57,21 @@ const AuthFormRoute = AuthFormImport.update({
 const AppAboutRoute = AppAboutImport.update({
   path: '/about',
   getParentRoute: () => AppRoute,
+} as any)
+
+const AuthUsersIndexRoute = AuthUsersIndexImport.update({
+  path: '/users/',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthGroupsIndexRoute = AuthGroupsIndexImport.update({
+  path: '/groups/',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthGroupsGroupIdRoute = AuthGroupsGroupIdImport.update({
+  path: '/groups/$groupId',
+  getParentRoute: () => AuthRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -107,13 +113,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthFormImport
       parentRoute: typeof AuthImport
     }
-    '/_auth/groups': {
-      id: '/_auth/groups'
-      path: '/groups'
-      fullPath: '/groups'
-      preLoaderRoute: typeof AuthGroupsImport
-      parentRoute: typeof AuthImport
-    }
     '/_auth/profile': {
       id: '/_auth/profile'
       path: '/profile'
@@ -121,18 +120,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthProfileImport
       parentRoute: typeof AuthImport
     }
-    '/_auth/users': {
-      id: '/_auth/users'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof AuthUsersImport
-      parentRoute: typeof AuthImport
-    }
     '/_auth/': {
       id: '/_auth/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof AuthIndexImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/groups/$groupId': {
+      id: '/_auth/groups/$groupId'
+      path: '/groups/$groupId'
+      fullPath: '/groups/$groupId'
+      preLoaderRoute: typeof AuthGroupsGroupIdImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/groups/': {
+      id: '/_auth/groups/'
+      path: '/groups'
+      fullPath: '/groups'
+      preLoaderRoute: typeof AuthGroupsIndexImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/users/': {
+      id: '/_auth/users/'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof AuthUsersIndexImport
       parentRoute: typeof AuthImport
     }
   }
@@ -144,10 +157,11 @@ export const routeTree = rootRoute.addChildren({
   AppRoute: AppRoute.addChildren({ AppAboutRoute }),
   AuthRoute: AuthRoute.addChildren({
     AuthFormRoute,
-    AuthGroupsRoute,
     AuthProfileRoute,
-    AuthUsersRoute,
     AuthIndexRoute,
+    AuthGroupsGroupIdRoute,
+    AuthGroupsIndexRoute,
+    AuthUsersIndexRoute,
   }),
   LoginRoute,
 })
@@ -175,10 +189,11 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/form",
-        "/_auth/groups",
         "/_auth/profile",
-        "/_auth/users",
-        "/_auth/"
+        "/_auth/",
+        "/_auth/groups/$groupId",
+        "/_auth/groups/",
+        "/_auth/users/"
       ]
     },
     "/login": {
@@ -192,20 +207,24 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_auth/form.tsx",
       "parent": "/_auth"
     },
-    "/_auth/groups": {
-      "filePath": "_auth/groups.tsx",
-      "parent": "/_auth"
-    },
     "/_auth/profile": {
       "filePath": "_auth/profile.tsx",
       "parent": "/_auth"
     },
-    "/_auth/users": {
-      "filePath": "_auth/users.tsx",
-      "parent": "/_auth"
-    },
     "/_auth/": {
       "filePath": "_auth/index.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/groups/$groupId": {
+      "filePath": "_auth/groups/$groupId.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/groups/": {
+      "filePath": "_auth/groups/index.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/users/": {
+      "filePath": "_auth/users/index.tsx",
       "parent": "/_auth"
     }
   }

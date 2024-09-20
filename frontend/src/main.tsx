@@ -18,6 +18,12 @@ import { ptBR as pickersPtBR } from '@mui/x-date-pickers/locales';
 import { routeTree } from './routeTree.gen'
 import App from './App'
 
+// roboto font
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
 // Create a new router instance
 const router = createRouter({ routeTree, context: { authentication: undefined! } })
 

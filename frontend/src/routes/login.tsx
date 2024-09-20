@@ -20,7 +20,7 @@ function Login() {
             </Box>
             <CopyRight className="mt-10" />
         </Container>
-    );
+    )
 }
 
 

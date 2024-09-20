@@ -15,7 +15,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
 function Root() {
     return <>
-        <Outlet />;
+        <Outlet />
         <TanStackRouterDevtools />
     </>
 }
@@ -31,5 +31,5 @@ function NotFound() {
                 </div>
             </div>
         </ >
-    );
+    )
 }

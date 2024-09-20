@@ -28,7 +28,7 @@ function App() {
     const authentication = useAuth();
     return (
         <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} context={{ authentication }} />;
+            <RouterProvider router={router} context={{ authentication }} />
         </QueryClientProvider>
     )
 }

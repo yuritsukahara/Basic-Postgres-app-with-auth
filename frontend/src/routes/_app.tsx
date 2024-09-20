@@ -1,9 +1,12 @@
 import Navbar from '@/components/Navbar'
+import { Container } from '@mui/material'
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_app')({
   component: () => <>
     <Navbar />
-    <Outlet />
+    <Container maxWidth="xl">
+      <Outlet />
+    </Container>
   </>
 })

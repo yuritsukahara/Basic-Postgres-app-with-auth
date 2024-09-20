@@ -1,3 +1,4 @@
+import Clock from '@/components/Clock'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/_auth/')({
@@ -6,8 +7,8 @@ export const Route = createFileRoute('/_auth/')({
 
 function Index() {
     return (
-        <div className="p-2">
-            <h3>Welcome Home!</h3>
-        </div>
+
+        <Clock />
+
     )
 }

@@ -9,6 +9,7 @@ import { Box, IconButton } from '@mui/material';
 //Atoms
 import { useAtom } from 'jotai';
 import { sidebarAtom } from '@/atoms';
+import Menus from './ui/Menus';
 
 // Swipe Menu
 type Anchor = 'left';
@@ -18,8 +19,6 @@ const iOS =
 
 export default function SwipeableTemporaryDrawer() {
     const [state, setState] = useAtom(sidebarAtom);
-
-
 
     const toggleDrawer =
         (anchor: Anchor, open: boolean) =>
@@ -56,6 +55,7 @@ export default function SwipeableTemporaryDrawer() {
                             // onKeyDown={toggleDrawer(anchor, false)}
 
                             >
+                                <Menus />
                             </Box>
                         </SwipeableDrawer>
                     </React.Fragment>

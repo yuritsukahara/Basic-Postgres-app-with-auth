@@ -10,7 +10,6 @@ import { api } from '@/lib/api';
 export const Route = createFileRoute('/_auth/users/')({
     component: Users,
     loader: () => {
-        await api.getUsers
     }
 })
 
@@ -40,7 +39,7 @@ function Users() {
                 </Button>
             </Box>
 
-            <DataTable modal={setOpen} data={ } />
+            <DataTable modal={setOpen} data='' />
 
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
                 <DialogTitle>

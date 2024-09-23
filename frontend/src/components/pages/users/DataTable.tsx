@@ -14,7 +14,7 @@ interface Row {
   [key: string]: any;
 }
 
-export default function DataTable({ moda, data }: { modal: React.Dispatch<React.SetStateAction<boolean>> }) {
+export default function DataTable({ modal, data }: { modal: React.Dispatch<React.SetStateAction<boolean>>, data: any }) {
   const [loading, setLoading] = useState(true);
   const [tableColumns, setTableColumns] = useState<GridColDef[]>([]);
   const [tableRows, setTableRows] = useState<Row[]>([]);
@@ -76,7 +76,7 @@ export default function DataTable({ moda, data }: { modal: React.Dispatch<React.
     setDeleteDialog(false)
   }
 
-  const handleSelectedRows = (e: GridRowSelectionModel) => {
+  const handleSelectedRows = (e: any) => {
     setSelectedRows(e)
   }
 

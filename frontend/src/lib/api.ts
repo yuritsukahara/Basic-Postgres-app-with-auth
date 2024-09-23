@@ -6,11 +6,11 @@ const token = localStorage.getItem('user');
 const client = hc<ApiRoutes>("/", {
     headers: token
         ? { "Authorization": `Bearer ${token}` }
-        : undefined // or {} if you prefer an empty object when there's no token
+        : {}
 });
 
 export async function getMe() {
-    const res = await api.me.$get();
+    const res = await api.me.$get()
     if (!res.ok) {
         throw new Error('server error')
     }
@@ -18,4 +18,4 @@ export async function getMe() {
     return data
 }
 
-export const api = client
+export const api = client.api

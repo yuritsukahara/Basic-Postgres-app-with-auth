@@ -79,5 +79,6 @@ export const authRoute = new Hono()
             return c.json(payload)
         } catch (error) {
             console.error("Login error: ", error);
+            return c.json({ error: 'Internal server error' }, 500);
         }
     })

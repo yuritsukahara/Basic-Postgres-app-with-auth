@@ -5,17 +5,8 @@ import { Payload } from "@server/sharedTypes";
 export const useAuth = () => {
 
     const isLogged = async () => {
-        const userString = localStorage.getItem('user');
 
-        if (!userString) return false
-
-        const userObject = JSON.parse(userString);
-
-        const userInfo = await api.me.$get({}, {
-            headers: {
-                Authorization: `Bearer ${userObject.token}`,
-            },
-        });
+        const userInfo = await api.me.$get();
 
         return userInfo.ok
     }
@@ -47,7 +38,14 @@ export const useAuth = () => {
 
     async function signIn(user: string, password: string) {
         const res = await api.getToken.$post({ json: { user, password } });
+
+        if (res.status === 500) {
+            throw Error('Server error')
+        }
+
+
         const data = await res.json()
+
 
         if (!res.ok && 'error' in data) throw Error(data.error)
 

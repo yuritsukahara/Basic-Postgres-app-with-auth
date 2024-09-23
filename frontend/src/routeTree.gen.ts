@@ -20,6 +20,7 @@ import { Route as AuthFormImport } from './routes/_auth/form'
 import { Route as AppAboutImport } from './routes/_app/about'
 import { Route as AuthUsersIndexImport } from './routes/_auth/users/index'
 import { Route as AuthGroupsIndexImport } from './routes/_auth/groups/index'
+import { Route as AuthUsersUserIdImport } from './routes/_auth/users/$userId'
 import { Route as AuthGroupsGroupIdImport } from './routes/_auth/groups/$groupId'
 
 // Create/Update Routes
@@ -66,6 +67,11 @@ const AuthUsersIndexRoute = AuthUsersIndexImport.update({
 
 const AuthGroupsIndexRoute = AuthGroupsIndexImport.update({
   path: '/groups/',
+  getParentRoute: () => AuthRoute,
+} as any)
+
+const AuthUsersUserIdRoute = AuthUsersUserIdImport.update({
+  path: '/users/$userId',
   getParentRoute: () => AuthRoute,
 } as any)
 
@@ -134,6 +140,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthGroupsGroupIdImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/users/$userId': {
+      id: '/_auth/users/$userId'
+      path: '/users/$userId'
+      fullPath: '/users/$userId'
+      preLoaderRoute: typeof AuthUsersUserIdImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/groups/': {
       id: '/_auth/groups/'
       path: '/groups'
@@ -160,6 +173,7 @@ export const routeTree = rootRoute.addChildren({
     AuthProfileRoute,
     AuthIndexRoute,
     AuthGroupsGroupIdRoute,
+    AuthUsersUserIdRoute,
     AuthGroupsIndexRoute,
     AuthUsersIndexRoute,
   }),
@@ -192,6 +206,7 @@ export const routeTree = rootRoute.addChildren({
         "/_auth/profile",
         "/_auth/",
         "/_auth/groups/$groupId",
+        "/_auth/users/$userId",
         "/_auth/groups/",
         "/_auth/users/"
       ]
@@ -217,6 +232,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_auth/groups/$groupId": {
       "filePath": "_auth/groups/$groupId.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/users/$userId": {
+      "filePath": "_auth/users/$userId.tsx",
       "parent": "/_auth"
     },
     "/_auth/groups/": {

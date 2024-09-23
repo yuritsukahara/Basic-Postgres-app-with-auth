@@ -1,7 +1,13 @@
 import { type ApiRoutes } from '@server/app'
 import { hc } from 'hono/client'
 
-const client = hc<ApiRoutes>('/')
+const token = localStorage.getItem('user');
+
+const client = hc<ApiRoutes>("/", {
+    headers: token
+        ? { "Authorization": `Bearer ${token}` }
+        : undefined // or {} if you prefer an empty object when there's no token
+});
 
 export async function getMe() {
     const res = await api.me.$get();
@@ -12,5 +18,4 @@ export async function getMe() {
     return data
 }
 
-
-export const api = client.api
+export const api = client
